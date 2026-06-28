@@ -1,0 +1,1 @@
+g++ src/main.cpp src/glad.c -Iinclude -lglfw3 -lopengl32 -lgdi32

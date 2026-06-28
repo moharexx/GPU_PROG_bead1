@@ -1,0 +1,8 @@
+CONTROLS:
+
+F11 = FULLSCREEN
+F5 = REFRESH
+F4 = PAUSE TIME
+LEFT_ARROW & RIGHT_ARROW = CHANGE FRAGMENT SHADER
+
+Some shaders may provide zoom and drag features.
