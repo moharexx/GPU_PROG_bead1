@@ -20,29 +20,27 @@ void terminate() {
 
 int main() {
 
+    //using my modules to initialize the window and rendering
     if (WindowModule::init() == 0) {
         terminate();
         return -1;
     };
     RenderModule::init();
 
-    //glViewport(0, 0, 1000, 1000);
-
     // ----------------------------------------------
 
-    while (!glfwWindowShouldClose(WindowModule::window)) {
-
+    while (!glfwWindowShouldClose(WindowModule::window)) { // main loop
         WindowModule::is_focused = glfwGetWindowAttrib(WindowModule::window, GLFW_FOCUSED);
-        if (WindowModule::is_focused) {
+        if (WindowModule::is_focused) { // only update inputs if window is focused
             InputModule::update(WindowModule::window);
             glfwGetWindowSize(WindowModule::window, &WindowModule::width, &WindowModule::height);
             glViewport(0, 0, WindowModule::width, WindowModule::height);
-        } else Sleep(1);
+        } else Sleep(1); // if the window isn't focused fps is made to drop
         
-        //glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        //glClear(GL_COLOR_BUFFER_BIT);
+        //glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // don't need to call
+        //glClear(GL_COLOR_BUFFER_BIT); // don't need to call
 
-        //glUseProgram(shaderProgram);
+        //glUseProgram(shaderProgram); // don't need to call every frame
 
         RenderModule::render();
     }

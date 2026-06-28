@@ -22,6 +22,7 @@ double InputModule::zoom = 1;
 int InputModule::fullscreen = 0;
 int InputModule::paused = 0;
 
+// processing mouse scroll inputs
 void InputModule::scroll_callback(GLFWwindow* window, double x, double y) {
     scroll_total += y;
     double dzoom = pow(1.2, -y);
@@ -30,6 +31,7 @@ void InputModule::scroll_callback(GLFWwindow* window, double x, double y) {
     y_drag /= dzoom;
 }
 
+// processing keyboard inputs
 void InputModule::key_callback(GLFWwindow* window, int key, int scancode, int actions, int mods) {
     if (key == GLFW_KEY_F11 && actions == GLFW_PRESS) {
         WindowModule::toggle_fullscreen();
@@ -66,6 +68,7 @@ void InputModule::key_callback(GLFWwindow* window, int key, int scancode, int ac
     }
 }
 
+// getting inputs, processing mouse move and drag inputs, this is called every frame
 void InputModule::update(GLFWwindow* window) {
     double cx;
     double cy;

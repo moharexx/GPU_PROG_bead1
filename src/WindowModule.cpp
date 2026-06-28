@@ -19,6 +19,7 @@ int WindowModule::saved_height;
 int WindowModule::saved_x;
 int WindowModule::saved_y;
 
+// initialize the window, starting size of 1000*1000
 int WindowModule::init() {
     is_focused = 1;
     is_fullscreen = 0;
@@ -46,11 +47,12 @@ int WindowModule::init() {
     return 1;
 }
 
+// duh!
 void WindowModule::toggle_fullscreen() {
     if (is_fullscreen) {
         is_fullscreen = 0;
         glfwSetWindowMonitor(window, NULL, saved_x, saved_y, saved_width, saved_height, 0);
-    } else {
+    } else { // saves previous position and size
         is_fullscreen = 1;
         saved_width = width;
         saved_height = height;

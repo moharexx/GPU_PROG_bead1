@@ -23,19 +23,17 @@ unsigned int RenderModule::VAO, RenderModule::VBO, RenderModule::EBO, RenderModu
 int RenderModule::ShaderProgram;
 const char *RenderModule::vertexShaderSource, *RenderModule::fragmentShaderSource;
 
+// initialize the rendering; vertecies (2 triangles), and shaders
 void RenderModule::init() {
     int success;
     char infoLog[1024];
 
     vertexShaderSource = read_shader((char*)"shader_vertex/base.glsl");
     
-    int i = 0;
+    // read first fragment shader from the directory
     for (const auto & entry : std::filesystem::directory_iterator("shader_fragment")) {
-        if (i < current_shader) i++;
-        else {
-            fragmentShaderSource = read_shader((char*)entry.path().string().c_str());
-            break;
-        }
+        fragmentShaderSource = read_shader((char*)entry.path().string().c_str());
+        break;
     }
 
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -92,11 +90,13 @@ void RenderModule::init() {
     glUseProgram(ShaderProgram);
 }
 
+// duh
 void RenderModule::terminate() {
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 }
 
+// reload the fragment shader, and reset time_u to 0
 void RenderModule::refresh() {
     int success;
     char infoLog[1024];
@@ -105,7 +105,7 @@ void RenderModule::refresh() {
     for (const auto & entry : std::filesystem::directory_iterator("shader_fragment")) {
         if (i < current_shader) i++;
         else {
-            free((void*)fragmentShaderSource);
+            free((void*)fragmentShaderSource); // so no memory leak happens, read_shader uses malloc()
             fragmentShaderSource = read_shader((char*)entry.path().string().c_str());
             break;
         }
@@ -129,6 +129,7 @@ void RenderModule::refresh() {
     glfwSetTime(0);
 }
 
+// called every frame, counts fps and uses render calls
 void RenderModule::render() {
     double curr_time = glfwGetTime();
     double dt = curr_time - last_time;
@@ -159,6 +160,7 @@ void RenderModule::render() {
     }
 }
 
+// reads file into char*
 char* RenderModule::read_shader(char* f_name) {
     FILE* f;
     f = fopen(f_name, "rb");

@@ -13,6 +13,7 @@ uniform float u_y;
 uniform float u_mouse;
 uniform float u_zoom;
 
+// messing with the formula for "getting too far"
 void main() {
    float x = (gl_FragCoord.x - u_x - u_resolution.x / 2) / 300 * u_zoom;
    float y = (gl_FragCoord.y + u_y - u_resolution.y / 2) / 300 * u_zoom;
@@ -25,7 +26,7 @@ void main() {
    float i = 0;
    while (i < ITERATION) {
       i++;
-      if (abs(c2x) + abs(c2y * c2y * 60) > 100) break; // interesting
+      if (abs(c2x) + abs(c2y * c2y * 60) > 100) break; // interesting effect
 
       c2x = x + c1x * c1x - c1y * c1y;
       c2y = y + 2 * c1x * c1y;

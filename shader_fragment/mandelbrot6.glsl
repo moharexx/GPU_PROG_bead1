@@ -13,22 +13,23 @@ uniform float u_y;
 uniform float u_mouse;
 uniform float u_zoom;
 
+// weird mutated mandelbrots
 void main() {
    float x = (gl_FragCoord.x - u_x - u_resolution.x / 2) / 300 * u_zoom;
    float y = (gl_FragCoord.y + u_y - u_resolution.y / 2) / 300 * u_zoom;
 
-   float c1x = 0;
-   float c2x = 0;
-   float c1y = 0;
-   float c2y = 0;
+   float c1x = x;
+   float c2x = x;
+   float c1y = y;
+   float c2y = y;
 
    float i = 0;
    while (i < ITERATION) {
       i++;
       if (c2x * c2x + c2y * c2y > 100) break;
 
-      c2x = x + c1x * c1x - c1y * c1y * c1y;
-      c2y = y + 2 * c1x * c1y;
+      c2x = x + c1x * c1x - c1y * c1y;
+      c2y = y + (2 + sin(u_time / 2)) * c1x * c1y; // weird mutation
       c1x = c2x;
       c1y = c2y;
    }

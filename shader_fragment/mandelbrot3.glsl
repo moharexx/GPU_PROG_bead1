@@ -13,6 +13,7 @@ uniform float u_y;
 uniform float u_mouse;
 uniform float u_zoom;
 
+// julia set things
 void main() {
    float x = (gl_FragCoord.x - u_x - u_resolution.x / 2) / 300 * u_zoom;
    float y = (gl_FragCoord.y + u_y - u_resolution.y / 2) / 300 * u_zoom;
@@ -27,8 +28,8 @@ void main() {
       i++;
       if (c2x * c2x + c2y * c2y > 100) break;
 
-      c2x = sin(u_time / 2) / 2 + c1x * c1x - c1y * c1y;
-      c2y = cos(u_time / 2) / 2 + 2 * c1x * c1y;
+      c2x = sin(u_time / 2) / 2 + c1x * c1x - c1y * c1y; // spinning
+      c2y = cos(u_time / 2) / 2 + 2 * c1x * c1y; // spinning
       c1x = c2x;
       c1y = c2y;
    }

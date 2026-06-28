@@ -13,7 +13,7 @@ uniform float u_y;
 uniform float u_mouse;
 uniform float u_zoom;
 
-// regular mandelbrot
+// heart mandelbrot, idk, made it up
 void main() {
    float x = (gl_FragCoord.x - u_x - u_resolution.x / 2) / 300 * u_zoom;
    float y = (gl_FragCoord.y + u_y - u_resolution.y / 2) / 300 * u_zoom;
@@ -26,13 +26,13 @@ void main() {
    float i = 0;
    while (i < ITERATION) {
       i++;
-      if (fma(c2x, c2x, c2y * c2y) > 100) break; // tried using FMA, no performance improvement was noticed (maybe compiler optimizes, or im using FMA wrong)
+      if (c2x * c2x + c2y * c2y > 100) break;
 
-      c2x = fma(c1x, c1x, x) - c1y * c1y;
-      c2y = fma(c1x, c1y, y / 2) * 2;
+      c2x = x + c1x * c1x - c1y * c1y * c1y; // added extra multiplication by c1y at the end
+      c2y = y + 2 * c1x * c1y;
       c1x = c2x;
       c1y = c2y;
    }
-   if (i >= ITERATION) FragColor = vec4(1, 1, 1, 1); // white if value doesn't escape
-   else FragColor = vec4(abs(sin(i / 10)), abs(sin(i / 10 + PI / 3)), abs(sin(i / 10 + 2 * PI / 3)), 1); // otherwise color it based on iteration
+   if (i >= ITERATION) FragColor = vec4(1, 1, 1, 1);
+   else FragColor = vec4(abs(sin(i / 10)), abs(sin(i / 10 + PI / 3)), abs(sin(i / 10 + 2 * PI / 3)), 1);
 }
