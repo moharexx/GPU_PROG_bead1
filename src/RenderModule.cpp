@@ -124,6 +124,8 @@ void RenderModule::refresh() {
     glLinkProgram(ShaderProgram);
     glUseProgram(ShaderProgram);
 
+    // unpause, reset time
+    InputModule::paused = 0;
     time = 0;
     last_time = 0;
     glfwSetTime(0);
